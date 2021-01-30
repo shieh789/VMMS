@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.brand.dao.BrandMapper">
+    <select id="findBrand" parameterType="com.example.brand.domain.Brand" resultType="com.example.brand.domain.Brand">
+        <choose>
+            <when test="brandId == null">
+                select a.id as brandid,a.name as brandname from vehicle_brand a;
+            </when>
+            <when test="brandId != null and groupId == null">
+                SELECT b.id as brandid, b.name as brandname
+                FROM vehicle_brand a
+                LEFT JOIN vehicle_series_group b ON b.brand_id = a.id
+                WHERE a.id = #{brandId};
+            </when>
+            <when test="groupId != null and seriesId == null">
+                SELECT c.id as brandid,c.full_name as brandname
+                FROM vehicle_brand a
+                LEFT JOIN vehicle_series_group b ON b.brand_id = a.id
+                LEFT JOIN vehicle_series c
+                ON a.id = c.brand_id
+                AND b.id = c.group_id
+                WHERE a.id = #{brandId} and b.id=#{groupId};
+            </when>
+            <when test="seriesId != null">
+                SELECT d.id as brandid,d.full_name as brandname
+                FROM vehicle_brand a
+                LEFT JOIN vehicle_series_group b ON b.brand_id = a.id
+                LEFT JOIN vehicle_series c
+                ON a.id = c.brand_id
+                AND b.id = c.group_id
+                LEFT JOIN vehicle_info d
+                ON a.id = d.brand_id
+                AND b.id = d.group_id
+                AND c.id = d.series_id
+                WHERE a.id = #{brandId} and b.id=#{groupId} and c.id=#{seriesId};
+            </when>
+        </choose>
+    </select>
+
+</mapper>
