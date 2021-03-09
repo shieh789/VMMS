@@ -2,12 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.login.dao.UserMapper">
-    <select id="getAllUser" resultType="com.example.login.domain.User">
-        select * from oper_user;
+<mapper namespace="com.vmms.login.dao.UserMapper">
+    <select id="getUserRolesByUid" parameterType="Integer" resultType="com.vmms.login.domain.Role">
+        select r.* from user_role ur,oper_role r where ur.rid = r.id and ur.uid =#{uid}
     </select>
 
-    <select id="findUserByUsername" parameterType="String" resultType="com.example.login.domain.User">
+    <select id="loadUserByUsername" parameterType="String" resultType="com.vmms.login.domain.User">
         select * from oper_user where username=#{username}
     </select>
 </mapper>

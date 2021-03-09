@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.car.dao.CarMapper">
-    <select id="addCar" parameterType="com.example.car.domain.Car">
+<mapper namespace="com.vmms.car.dao.CarMapper">
+    <select id="addCar" parameterType="com.vmms.car.domain.Car">
         insert into
             car_info (platenumber,motorcycletype,customername,customerphone)
         values (#{plateNumber},#{motorcycleType},#{customerName},#{customerPhone})
